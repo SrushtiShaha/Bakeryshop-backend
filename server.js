@@ -1,12 +1,21 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const cors = require('cors');
 
-dotenv.config();
+dotenv.config(); // ✅ Load environment variables first
 
-const app = express();
-app.use(express.json());
+const app = express(); // ✅ Define app before using it
 
+// Enable CORS for React frontend
+app.use(cors({
+  origin: 'http://localhost:3000', // Allow React app
+  credentials: true
+}));
+
+app.use(express.json()); // Parse JSON
+
+// MongoDB Connection
 const MONGO_URI = process.env.MONGO_URI;
 if (!MONGO_URI) {
   console.error('.env file is missing or MONGO_URI not defined');
@@ -23,11 +32,12 @@ mongoose.connect(MONGO_URI, {
   process.exit(1);
 });
 
+// Test route
 app.get('/', (req, res) => {
   res.send('Bakery Server is running ✅');
 });
 
-// Routes
+// API Routes
 app.use('/api/customers', require('./routes/customerRoutes'));
 app.use('/api/products', require('./routes/productRoutes'));
 app.use('/api/sales', require('./routes/salesRoutes'));
@@ -39,6 +49,7 @@ app.use((req, res) => {
   res.status(404).json({ message: 'Route not found' });
 });
 
+// Start Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
