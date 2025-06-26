@@ -1,5 +1,4 @@
-
-
+const mongoose = require('mongoose');
 const saleSchema = new mongoose.Schema({
   customer: {
     type: mongoose.Schema.Types.ObjectId,
