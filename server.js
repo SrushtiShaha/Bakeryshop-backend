@@ -8,8 +8,15 @@ dotenv.config(); // ✅ Load environment variables first
 const app = express(); // ✅ Define app before using it
 
 // Enable CORS for React frontend
-app.use(cors({
-  origin: 'http://localhost:3000', // Allow React app
+// app.use(cors({
+//   origin: 'http://localhost:3=5000', // Allow React app
+//   credentials: true
+// }));
+
+const mycors = require('cors');
+
+app.use(mycors({
+  origin: 'http://localhost:3000',
   credentials: true
 }));
 
