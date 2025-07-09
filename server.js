@@ -16,7 +16,7 @@ const app = express(); // ✅ Define app before using it
 const mycors = require('cors');
 
 app.use(mycors({
-  origin: 'http://localhost:3000',
+  origin: ['http://localhost:3000', 'https://bakery-shop-client-main-l8t5.vercel.app'],
   credentials: true
 }));
 
